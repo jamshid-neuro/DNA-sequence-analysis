@@ -62,7 +62,9 @@ def ORF_find(orf_length):
             for seq in orfs2:
                 if len(seq) > orf_length:
                     output.append(seq)
-                    
+            if output == []:
+                print('\nNo ORF(s) of' , orf_length, 'bp was found')
+                break
             
             for p, q in enumerate(output):
                 pass
