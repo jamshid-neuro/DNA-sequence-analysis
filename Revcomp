@@ -1,0 +1,33 @@
+# DNA sequence reverse complementing:
+
+def DNA_revcom(sequence):
+    
+    sec_dic = {'a':'t', 't':'a', 'c':'g', 'g':'c'}
+    
+    complemented = [sec_dic[nuc] for nuc in sequence]
+    
+    st_comp = ''.join(complemented)
+    
+    return st_comp[::-1].lower()
+
+while True:
+    
+    sequence = str(input('Please enter your sequence: '))
+    
+    seq_chck = 'actg'
+    result = ''
+    seq_chck2 = [str(let) for let in sequence.lower()]
+    
+    for n in seq_chck2:
+        if n not in seq_chck:
+            result = 'nope'
+    
+    if 'nope' in result:
+        print('Your sequence contains unacceptable characters!')
+        continue
+    else:    
+        print('\n' + 'Reverse complement of your sequence is:', '5-', DNA_revcom(sequence.lower()), '-3')
+	print('Your sequence length is:', len(sequence))
+        break  
+ 
+ 
