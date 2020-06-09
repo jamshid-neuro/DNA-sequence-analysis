@@ -1,0 +1,68 @@
+def ORF_find(orf_length):
+    
+    while True:
+
+        sequence = str(input('Please enter your sequence: '))
+
+        seq_chck = 'actg'
+        result = ''
+        seq_chck2 = [str(let) for let in sequence.lower()]
+
+        for n in seq_chck2:
+            if n not in seq_chck:
+                result = 'nope'
+
+        if 'nope' in result:
+            print('\nYour sequence contains unacceptable characters!')
+            continue
+        else:  
+
+            triples = []
+
+            for n, m in enumerate(sequence):
+                triples.append(sequence[n:n+3].lower())
+
+            codes = triples[0::3]
+
+            start = ['atg']
+            stop = ['taa', 'tag', 'tga']
+
+            start_codons = []
+            stop_codons = []
+            counter = 0
+
+
+            for x, y in enumerate(codes):
+                if y == 'atg':
+                    start_codons.append(x)
+                elif y in stop:
+                    stop_codons.append(x)
+
+            orfs = []
+
+            for n in start_codons:
+                for m in stop_codons:
+
+                    orfs.append(codes[n:m+1])
+
+            orfs2 = []
+            for item in orfs:
+                orfs2.append(''.join(item))
+
+            output = []
+
+            for seq in orfs2:
+                if len(seq) > orf_length:
+                    output.append(seq)
+                    
+            
+            for p, q in enumerate(output):
+                pass
+            print('\n', p+1, ' ORFs were found:\n')
+            for p, q in enumerate(output):
+                print('\n',p+1,'-',q)
+            
+            break
+
+    
+   
