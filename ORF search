@@ -26,55 +26,136 @@ def ORF_find(orf_length):
             for n, m in enumerate(sequence):
                 triples.append(sequence[n:n+3].lower())
 
-            codes = triples[0::3]
+            
+            frame1 = triples[0::3]
+            frame2 = triples[1::3]
+            frame3 = triples[2::3]
+        
+            ###CORRECT SO FAR!!!
+            
+            codes = frame1 + frame2 + frame3
+    
+            if 'atg' not in str(codes):
 
-            start = ['atg']
-            stop = ['taa', 'tag', 'tga']
-
-            if 'atg' not in codes:
-                
                 print('\nThis sequence does not contain an ORF!\n')
                 break
-                
+        
+            start_codons_fr1 = []
+            start_codons_fr2 = []
+            start_codons_fr3 = []
             
-            start_codons = []
-            stop_codons = []
+            
+            for x1, y1 in enumerate(frame1):
+                
+                if y1 == 'atg':
+                    start_codons_fr1.append(x1)
+                          
+            for x2, y2 in enumerate(frame2):
+                
+                if y2 == 'atg':
+                    start_codons_fr2.append(x2)
+                    
+            for x3, y3 in enumerate(frame3):
+                
+                if y3 == 'atg':
+                    start_codons_fr3.append(x3)
+      
+            ## CORRECT SO FAR!!!
+        
+            
+        
+            atg_2_end = []
 
-            for x, y in enumerate(codes):
-                if y == 'atg':
-                    start_codons.append(x)
-                elif y in stop:
-                    stop_codons.append(x)
-
+            for n1 in start_codons_fr1:
+        
+                    atg_2_end.append(frame1[n1:]) 
+           
+           
+            for n2 in start_codons_fr2:
+        
+                    atg_2_end.append(frame2[n2:])
+            
+          
+            for n3 in start_codons_fr3:
+        
+                atg_2_end.append(frame3[n3:])
+           
+          
             orfs = []
-
-            for n in start_codons:
-                for m in stop_codons:
-
-                    orfs.append(codes[n:m+1])
-
-            orfs2 = []
-            for item in orfs:
-                orfs2.append(''.join(item))
+  
+            
+            for seq in atg_2_end:
+                       
+                if 'taa' in seq:
+                    orfs.append(seq[0:seq.index('taa')+1])
+                  
+                if 'tag' in seq:
+                    orfs.append(seq[0:seq.index('tag')+1])
+             
+                if 'tga' in seq:
+                    orfs.append(seq[0:seq.index('tga')+1])
+                    
+        
+                    
+            
+            orfs_to_go = []
+            
+            for i in orfs:
+                
+                if 'tga' in i[0:-1]:
+                    
+                    orfs_to_go.append(i)
+                    
+                if 'taa' in i[0:-1]:
+                    orfs_to_go.append(i)
+                    
+                if 'tag' in i[0:-1]:
+                    orfs_to_go.append(i)
+                    
+            
+           
+            
+            
+            orfs2 = [obj for obj in orfs if obj not in orfs_to_go]
+            
+  ############ airtight correct so far (DO NOT TOUCH!!!)          
+        
+            
+           
+     
+            
+            orfs3 = []
+            
+            for item in orfs2:
+                orfs3.append(''.join(item))
+                
+   ############ airtight correct so far (DO NOT TOUCH!!!) 
 
             output = []
-
-            for seq in orfs2:
-                if len(seq) > orf_length:
-                    output.append(seq)
+        
+            for chain in orfs3:
+                if len(chain) >= orf_length:
+                    output.append(chain)
+          
+            
+             
             if output == []:
                 print('\nNo ORF(s) of' , orf_length, 'bp was found')
                 break
+           
             
             for p, q in enumerate(output):
+                
                 pass
             
-            print('\033[1m' + '\n', p+1, ' ORFs were found:\n' + '\033[0m')
+            print('\033[1m' + '\nNumber of ORF(s) found:', p+1, '\033[0m')
             
             for p, q in enumerate(output):
                 print('\n','\033[1m',  p+1 , '\033[0m','-',q)
+                print('\n', len(q))
+            
+            
             
             break
 
     
-   
