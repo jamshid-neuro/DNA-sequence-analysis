@@ -44,7 +44,7 @@ def ORF_find(orf_length):
             start_codons_fr2 = []
             start_codons_fr3 = []
             
-            
+            # TO FIND INDEXES OF START CODONS IN ALL FRAMES
             for x1, y1 in enumerate(frame1):
                 
                 if y1 == 'atg':
@@ -60,10 +60,10 @@ def ORF_find(orf_length):
                 if y3 == 'atg':
                     start_codons_fr3.append(x3)
       
-            ## CORRECT SO FAR!!!
+ ##TESTED: ################# CORRECT SO FAR!!!
         
             
-        
+            # STRETCHES STARTING FROM AN ATG TO THE END OF THE SEQUENCE IN ALL FRAMES
             atg_2_end = []
 
             for n1 in start_codons_fr1:
@@ -80,7 +80,7 @@ def ORF_find(orf_length):
         
                 atg_2_end.append(frame3[n3:])
            
-          
+            ### CUTTING SEQUENCE STRETCHES WHEN THEY COME ACROSS ONE OF THE THREE STOP CODONS 
             orfs = []
   
             
@@ -96,7 +96,7 @@ def ORF_find(orf_length):
                     orfs.append(seq[0:seq.index('tga')+1])
                     
         
-                    
+            ### CHECKING FOR OCCURENCE OF ANY OF THE STOP CODONS IN THE MIDDLE OF THE SEQUENCE (EXCLUDING THE LAST CODE)      
             
             orfs_to_go = []
             
@@ -112,27 +112,23 @@ def ORF_find(orf_length):
                 if 'tag' in i[0:-1]:
                     orfs_to_go.append(i)
                     
-            
-           
-            
-            
+
+            ## FILTERING OUT SEQUENCES WITH A STOP CODON BETWEEN ATG AND THE LAST CODON
             orfs2 = [obj for obj in orfs if obj not in orfs_to_go]
             
-  ############ airtight correct so far (DO NOT TOUCH!!!)          
+  ############ airtight correct so far (DO NOT TOUCH ABOVE!!!)          
         
-            
-           
-     
-            
+            ## ASSEMBLING TRIPLETS INTO A SEAMLESS STRETCH
             orfs3 = []
             
             for item in orfs2:
                 orfs3.append(''.join(item))
                 
-   ############ airtight correct so far (DO NOT TOUCH!!!) 
+   ############ airtight correct so far (DO NOT TOUCH ABOVE!!!) 
 
             output = []
         
+            ## CONTROL FOR THE LENGTH OF THE ORF
             for chain in orfs3:
                 if len(chain) >= orf_length:
                     output.append(chain)
@@ -152,10 +148,6 @@ def ORF_find(orf_length):
             
             for p, q in enumerate(output):
                 print('\n','\033[1m',  p+1 , '\033[0m','-',q)
-                print('\n', len(q))
-            
-            
-            
-            break
+                print('\nOrf length:', len(q))
 
-    
+            break
