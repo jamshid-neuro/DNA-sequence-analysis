@@ -42,7 +42,8 @@ def ORF_find(orf_length = 0):
             frame2 = triples[1::3]
             frame3 = triples[2::3]
         
-            ###CORRECT SO FAR!!!
+            
+            
             
             codes = frame1 + frame2 + frame3
     
@@ -71,9 +72,8 @@ def ORF_find(orf_length = 0):
                 if y3 == 'atg':
                     start_codons_fr3.append(x3)
       
- ##TESTED: ################# CORRECT SO FAR!!!
-        
-            
+      
+      
             # STRETCHES STARTING FROM AN ATG TO THE END OF THE SEQUENCE IN ALL FRAMES
             atg_2_end = []
 
@@ -127,7 +127,7 @@ def ORF_find(orf_length = 0):
             ## FILTERING OUT SEQUENCES WITH A STOP CODON BETWEEN ATG AND THE LAST CODON
             orfs2 = [obj for obj in orfs if obj not in orfs_to_go]
             
-  ############ airtight correct so far (DO NOT TOUCH ABOVE!!!)          
+         
         
             ## ASSEMBLING TRIPLETS INTO A SEAMLESS STRETCH
             orfs3 = []
@@ -135,7 +135,7 @@ def ORF_find(orf_length = 0):
             for item in orfs2:
                 orfs3.append(''.join(item))
                 
-   ############ airtight correct so far (DO NOT TOUCH ABOVE!!!) 
+   
 
             output = []
         
