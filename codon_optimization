@@ -59,3 +59,4 @@ def codon_optimize():
                 
             
             break
+            
