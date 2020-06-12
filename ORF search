@@ -1,8 +1,19 @@
-def ORF_find(orf_length):
+def ORF_find(orf_length = 0):
     
     while True:
 
         sequence = str(input('Please enter your sequence: '))
+        
+        # RETURNS ORFS OF ABOVE A USER-SPECIFIED LENGTH
+        try:
+            orf_length = int(input('Minimum ORF length:'))
+            
+        # IF LEFT EMPTY, ASSUMES '0' AND RETURNS ALL POSSIBLE ORFS IN EVERY FRAME
+        
+        except:
+            
+            orf_length = 0
+            pass
 
         seq_chck = 'actg'
         result = ''
@@ -96,7 +107,7 @@ def ORF_find(orf_length):
                     orfs.append(seq[0:seq.index('tga')+1])
                     
         
-            ### CHECKING FOR OCCURENCE OF ANY OF THE STOP CODONS IN THE MIDDLE OF THE SEQUENCE (EXCLUDING THE LAST CODE)      
+            ### CHECKING FOR OCCURENCE OF ANY OF THE STOP CODONS IN THE MIDDLE OF THE SEQUENCE (EXCEPT THE LAST CODE)      
             
             orfs_to_go = []
             
@@ -148,6 +159,6 @@ def ORF_find(orf_length):
             
             for p, q in enumerate(output):
                 print('\n','\033[1m',  p+1 , '\033[0m','-',q)
-                print('\nOrf length:', len(q))
+                print('\nORF length:', len(q))
 
             break
