@@ -162,3 +162,4 @@ def ORF_find(orf_length = 0):
                 print('\nORF length:', len(q))
 
             break
+            
