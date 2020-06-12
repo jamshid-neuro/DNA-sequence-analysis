@@ -1,0 +1,61 @@
+def codon_optimize():
+    
+    
+    crack_codes = {'ttt':'F', 'ttc':'F','tta':'L', 'ttg':'L','ctt':'L', 'ctc':'L', 'cta':'L', 'ctg':'L','att':'I', 'atc':'I', 'ata':'I','atg':'M', 'gtt':'V','gtc':'V', 'gta': 'V', 'gtg': 'V', 'tct': 'S', 'tcc':'S', 'tca':'S', 'tcg':'S', 'cct':'P','ccc':'P', 'cca':'P', 'ccg': 'P','act':'T', 'acc': 'T', 'aca': 'T', 'acg':'T','gct':'A', 'gcc': 'A', 'gca':'A', 'gcg':'A', 'tat':'Y', 'tac':'Y', 'taa':'*', 'tag':'*', 'cat':'H', 'cac':'H', 'caa':'Q', 'cag':'Q', 'aat':'N', 'aac':'N', 'aaa':'K', 'aag':'K', 'gat':'D', 'gac':'D', 'gaa':'E', 'gag':'E', 'tgt':'C', 'tgc':'C', 'tga':'*','tgg':'W','cgt':'R','cgc':'R','cga':'R','cgg':'R','agt':'S','agc':'S','aga':'R','agg':'R','ggt':'G','ggc':'G', 'gga':'G', 'ggg':'G'}
+    
+    
+    optimised_codons = {'F':'ttc', 'L':'ctg', 'H':'cac', 'Q': 'cag', 'I':'atc', 'M':'atg', 'N':'aac', 'K':'aag', 'V':'gtg', 'D':'gat', 'E':'gag', 'S':'agc', 'C':'tgc', '*':'taa', 'W':'tgg', 'P':'ccc', 'R':'cgc', 'T':'acc', 'A':'gcc', 'G':'ggc', 'Y':'tac'}
+    
+    
+    while True:
+
+        sequence = str(input('Please enter your sequence: '))
+
+        seq_chck = 'actg'
+        result = ''
+        seq_chck2 = [str(let) for let in sequence.lower()]
+
+        for n in seq_chck2:
+            if n not in seq_chck:
+                result = 'nope'
+
+        if 'nope' in result:
+            print('Your sequence contains unacceptable characters!')
+            continue
+
+        else:
+
+            triples = []
+
+            for n, m in enumerate(sequence):
+                triples.append(sequence[n:n+3].lower())
+
+
+            codes = triples[0::3]    
+            
+            
+                
+            stammar = []
+
+            for i in codes:
+
+                stammar.append(crack_codes[i])
+            
+            #ACTIVATE TO TRASNLATE:
+            
+            #fluent = ''.join(stammar)
+            #print('\n\n Translation of your ORF:\n\n', fluent)
+            #return False
+        
+            optim = []
+            
+            for n in stammar:
+                optim.append(optimised_codons[n])
+                
+            seamless_optim = ''.join(optim)
+            
+           
+            print('\n\nYour optimised codon:\n\n',seamless_optim)
+                
+            
+            break
