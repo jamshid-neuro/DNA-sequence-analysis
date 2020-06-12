@@ -6,7 +6,7 @@ def ORF_find(orf_length = 0):
         
         # RETURNS ORFS OF ABOVE A USER-SPECIFIED LENGTH
         try:
-            orf_length = int(input('Minimum ORF length:'))
+            orf_length = int(input('\nMinimum ORF length (optional):'))
             
         # IF LEFT EMPTY, ASSUMES '0' AND RETURNS ALL POSSIBLE ORFS IN EVERY FRAME
         
