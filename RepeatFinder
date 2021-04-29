@@ -1,0 +1,43 @@
+def find_repeats(orig_length):
+    sequence = input('Please enter a DNA sequence:')
+    chunks = []
+    repeats = []
+    pairs = []
+    lngt = 0 
+    size = 1
+    seq_coords = []
+    coord_pairs = []
+    
+    for n,m in enumerate(sequence):
+        chunks.append(sequence[n:n+orig_length])
+    print(chunks)
+    for x in set(chunks):
+        if sequence.count(x) >= 2 and len(x) == orig_length:
+            repeats.append(x)
+    print(repeats)
+    
+    repeat_dict = {}
+    for seq in repeats:
+        repeat_dict[seq] = []
+        #print(repeat_dict)
+        count = 0
+        step = 0
+        index_keep = sequence.index(seq)
+        while count < sequence.count(seq):
+            count += 1
+            # to make sure that find() function does not look up a repeat twice: 
+            while index_keep+step < sequence.find(seq, index_keep+step):
+                    index_keep += 1
+            
+            # skip the first instance of a repeat
+            if count == 1:
+                pass
+            # add the index of the second repeat on
+            else:
+                repeat_dict[seq].append(sequence.find(seq, index_keep+step))
+                
+            #print("seq:"+seq)
+            #print(sequence.index(seq))
+           # print(sequence.index(seq)+step)
+            step += orig_length
+            print(repeat_dict)
