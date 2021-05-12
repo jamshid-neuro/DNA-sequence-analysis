@@ -1,0 +1,77 @@
+def synonymizer():
+    
+    dna = input('Enter your DNA sequence:')
+    
+    aa_2_nuc = {
+    'I':['ATA', 'ATC', 'ATT'], 
+    'M': 'ATG',
+    'T':['ACA', 'ACC', 'ACG', 'ACT', ],
+    'N':['AAC', 'AAT'], 
+    'K':['AAA', 'AAG'], 
+    'S':['AGC', 'AGT', 'TCA', 'TCC', 'TCG', 'TCT'],
+    'R':['AGA', 'AGG', 'CGA', 'CGC', 'CGG', 'CGT'], 
+    'L':['CTA', 'CTC', 'CTG', 'CTT'],
+    'P':['CCA', 'CCC', 'CCG', 'CCT'],
+    'H':['CAC', 'CAT'], 
+    'Q':['CAA', 'CAG'],
+    'V':['GTA', 'GTC', 'GTG', 'GTT'],
+    'A':['GCA', 'GCC', 'GCG', 'GCT'],
+    'D':['GAC', 'GAT'],
+    'E':['GAA', 'GAG'],
+    'G':['GGA','GGC','GGG', 'GGT'], 
+    'F':['TTC', 'TTT'],
+    'L':['TTA', 'TTG'],
+    'Y':['TAC', 'TAT'], 
+    'STOP':['TAA', 'TAG', 'TGA'],
+    'C':['TGC', 'TGT'],
+    'W':'TGG'}
+    
+    nuc_2_aa = {'ttt':'F', 'ttc':'F','tta':'L', 'ttg':'L','ctt':'L', 
+               'ctc':'L', 'cta':'L', 'ctg':'L','att':'I', 'atc':'I', 
+               'ata':'I','atg':'M', 'gtt':'V','gtc':'V', 'gta': 'V', 
+               'gtg': 'V', 'tct': 'S', 'tcc':'S', 'tca':'S', 'tcg':'S', 
+               'cct':'P','ccc':'P', 'cca':'P', 'ccg': 'P','act':'T', 
+               'acc': 'T', 'aca': 'T', 'acg':'T','gct':'A', 'gcc': 'A', 
+               'gca':'A', 'gcg':'A', 'tat':'Y', 'tac':'Y', 'taa':'*', 
+               'tag':'*', 'cat':'H', 'cac':'H', 'caa':'Q', 'cag':'Q', 
+               'aat':'N', 'aac':'N', 'aaa':'K', 'aag':'K', 'gat':'D', 
+               'gac':'D', 'gaa':'E', 'gag':'E', 'tgt':'C', 'tgc':'C', 
+               'tga':'*','tgg':'W','cgt':'R','cgc':'R','cga':'R','cgg':'R',
+               'agt':'S','agc':'S','aga':'R','agg':'R','ggt':'G','ggc':'G', 
+               'gga':'G', 'ggg':'G'}
+    
+    triplets = []
+    
+    for i,n in enumerate(dna):
+        triplets.append(dna[i:i+3])
+
+    codons = triplets[::3]
+    
+    translation = []
+    for code in codons:
+        translation.append(nuc_2_aa[code.lower()])
+    #test:
+    #print(translation)
+    
+    
+    import random
+
+    synonymized = []
+    for aa in translation:
+        synonymized.append(random.choice(aa_2_nuc[aa]))
+    synonym_seq = ''.join(synonymized[:len(translation)])
+    
+    print("\nOriginal sequence:"+ dna)
+    print("\nSynonymized sequence:" + synonym_seq)
+    
+    u =zip(dna, synonym_seq)
+    
+    score = 0
+    for i,j in u:
+        #if i == j:
+            #print(i,'--',j)
+            pass
+        else:
+            #print(i,'  ',j)
+            score += 1
+    print("\nDifference score is:"+str(score))
