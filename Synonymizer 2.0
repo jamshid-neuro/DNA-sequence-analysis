@@ -1,0 +1,105 @@
+def synonymizer():
+    
+    dna = input('Please enter your DNA sequence:')
+    
+    aa_2_nuc = {
+    'I':['ATA', 'ATC', 'ATT'], 
+    'M': 'ATG',
+    'T':['ACA', 'ACC', 'ACG', 'ACT', ],
+    'N':['AAC', 'AAT'], 
+    'K':['AAA', 'AAG'], 
+    'S':['AGC', 'AGT', 'TCA', 'TCC', 'TCG', 'TCT'],
+    'R':['AGA', 'AGG', 'CGA', 'CGC', 'CGG', 'CGT'], 
+    'L':['CTA', 'CTC', 'CTG', 'CTT'],
+    'P':['CCA', 'CCC', 'CCG', 'CCT'],
+    'H':['CAC', 'CAT'], 
+    'Q':['CAA', 'CAG'],
+    'V':['GTA', 'GTC', 'GTG', 'GTT'],
+    'A':['GCA', 'GCC', 'GCG', 'GCT'],
+    'D':['GAC', 'GAT'],
+    'E':['GAA', 'GAG'],
+    'G':['GGA','GGC','GGG', 'GGT'], 
+    'F':['TTC', 'TTT'],
+    'L':['TTA', 'TTG'],
+    'Y':['TAC', 'TAT'], 
+    'STOP':['TAA', 'TAG', 'TGA'],
+    'C':['TGC', 'TGT'],
+    'W':'TGG'}
+    
+    nuc_2_aa = {'ttt':'F', 'ttc':'F','tta':'L', 'ttg':'L','ctt':'L', 
+               'ctc':'L', 'cta':'L', 'ctg':'L','att':'I', 'atc':'I', 
+               'ata':'I','atg':'M', 'gtt':'V','gtc':'V', 'gta': 'V', 
+               'gtg': 'V', 'tct': 'S', 'tcc':'S', 'tca':'S', 'tcg':'S', 
+               'cct':'P','ccc':'P', 'cca':'P', 'ccg': 'P','act':'T', 
+               'acc': 'T', 'aca': 'T', 'acg':'T','gct':'A', 'gcc': 'A', 
+               'gca':'A', 'gcg':'A', 'tat':'Y', 'tac':'Y', 'taa':'*', 
+               'tag':'*', 'cat':'H', 'cac':'H', 'caa':'Q', 'cag':'Q', 
+               'aat':'N', 'aac':'N', 'aaa':'K', 'aag':'K', 'gat':'D', 
+               'gac':'D', 'gaa':'E', 'gag':'E', 'tgt':'C', 'tgc':'C', 
+               'tga':'*','tgg':'W','cgt':'R','cgc':'R','cga':'R','cgg':'R',
+               'agt':'S','agc':'S','aga':'R','agg':'R','ggt':'G','ggc':'G', 
+               'gga':'G', 'ggg':'G'}
+    accumulated_synonyms = []
+    checklist = []
+    again = ''
+    while again != 'n':
+        triplets = []
+
+        for i,n in enumerate(dna):
+            triplets.append(dna[i:i+3])
+
+        codons = triplets[::3]
+
+        translation = []
+        for code in codons:
+            translation.append(nuc_2_aa[code.lower()])
+        #test:
+        #print(translation)
+
+
+        import random
+
+        synonymized = []
+
+        iteration = int(input('Please enter number of iterations:'))
+        iter_count = 0
+        syn_seqs_score = []
+
+        while iteration > iter_count:
+            synonym_seq = ''
+            synonymized = []
+            for aa in translation:
+                synonymized.append(random.choice(aa_2_nuc[aa]))
+            synonym_seq = ''.join(synonymized[:])
+
+            #to compare difference with the original DNA with a difference score
+            u =zip(dna, synonym_seq)
+
+            score = 0
+            for i,j in u:
+                if i == j:
+                    #print(i,'--',j)
+                    pass
+                else:
+                    #print(i,'  ',j)
+                    score += 1
+
+            iter_count += 1
+            syn_seqs_score.append((synonym_seq, score))
+        #print(syn_seqs_score)
+        # function to return the second element of each tuple in syn_seqs_score list i.e. the score
+        def sort_list(x):
+            return x[1]
+        #print(sorted(syn_seqs_score, key = sort_list, reverse = True)[1:10])
+        accumulated_synonyms.append(sorted(syn_seqs_score, key = sort_list, reverse = True)[0])
+        #checklist.append(sorted(syn_seqs_score, key = sort_list, reverse = True)[0][0])
+        dna = sorted(syn_seqs_score, key = sort_list, reverse = True)[0][0]
+        #print('TEST:')
+        #print(syn_seqs_score)
+        print('\nSynonymized sequence:'+'\n'+dna)
+        print('\nDifference score:'+ str(sorted(syn_seqs_score, key = sort_list, reverse = True)[0][1]))
+        print('\n')
+        print('All synonymous sequences:')
+        print(accumulated_synonyms)
+        again = str(input('Run again? (y/n)'))
+        
